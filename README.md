@@ -1,6 +1,13 @@
 # 🚀 Static Website CI/CD Pipeline using GitHub Actions & AWS S3
 
-This project demonstrates how to automatically deploy a static website (HTML/CSS/JavaScript) to **Amazon S3** using **GitHub Actions** as a CI/CD pipeline.
+## 📌 Objective:
+To automate the process of building, testing, and deploying a static website (built using HTML, CSS, and JavaScript) to a web hosting platform like AWS S3 or Netlify, using modern CI/CD tools like GitHub Actions, Jenkins, or GitLab CI.
+
+---
+## 🔧 Tech Stack:
+- **Frontend**: HTML, CSS, JavaScript
+- **CI/CD Tool**: GitHub Actions 
+- **Hosting**: AWS S3 (with optional CloudFront) 
 
 ---
 
@@ -25,10 +32,10 @@ static-website/
 1. **Create an S3 Bucket**
    - Enable **static website hosting**
    - Make it public or integrate with **CloudFront** for secure access
-
+     
 2. **Create an IAM User**
-   - Enable **programmatic access**
-   - Attach `AmazonS3FullAccess` policy (demo only; use least privilege for production)
+   - Attach `AmazonS3FullAccess` policy (use least privilege for production)
+   - Generate Access key
 
 3. **Bucket Policy (for public access)**
 ```json
@@ -116,4 +123,56 @@ After successful deployment, your static website will be accessible at the follo
 http://your-bucket-name.s3-website-<region>.amazonaws.com
 ```
 
+![IAM user](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/user.png)
+
+![bucket](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/bucket_content.png)
+
 ![output](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/output.png)
+
+---
+
+## ✅ Optional Add-On: Use AWS CloudFront (CDN)
+
+To improve performance and global availability of your static website, you can use **Amazon CloudFront** as a Content Delivery Network (CDN) in front of your S3 bucket.
+
+### 🚀 Why Use CloudFront?
+
+- Speeds up content delivery using edge locations worldwide
+- Caches your static assets (HTML, CSS, JS, images)
+- Reduces load on your S3 bucket
+- Optionally allows HTTPS access with a default CloudFront domain
+
+### 🪜 Steps to Set Up CloudFront
+
+1. **Go to AWS Console > CloudFront**
+2. **Create a CloudFront distribution**
+   - **Distribution name**
+   - **Origin type**: AWS S3
+   - **Origin**: Select your **S3 static website hosting endpoint**
+     - Format: `my-bucket.s3-website-<region>.amazonaws.com`
+   - **origin**: leaving it blank
+   - **Viewer protocol policy**: Redirect HTTP to HTTPS *(optional)*
+4. **Leave default settings for now and create the distribution**
+5. **Create a Cache Invalidation**: This clears the **CloudFront cache** and ensures users see your latest deployed website files.
+   - Go to your CloudFront **distribution ID**.
+   - Click on the **“Invalidations”** tab.
+   - Click **“Create Invalidation”**
+   - In the **Object Paths**, enter:
+        - `/*` : This invalidates **all files** in the distribution.
+   - Click Create Invalidation
+
+![origin](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/origin.png)
+
+![invalidation](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/invalidation.png)
+
+
+### 🌐 Accessing via CloudFront
+
+Once the distribution is deployed (it may take a few minutes), your static site will be available at a **CloudFront URL**, like:
+```
+https://d3nwwpqx7m3zbn.cloudfront.net/
+```
+
+![cloudfront](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/cloudfront.png)
+
+---
