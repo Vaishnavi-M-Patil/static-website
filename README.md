@@ -31,7 +31,7 @@ static-website/
 
 1. **Create an S3 Bucket**
    - Enable **static website hosting**
-   - Make it public or integrate with **CloudFront** for secure access
+   - Make it **public** 
      
 2. **Create an IAM User**
    - Attach `AmazonS3FullAccess` policy (use least privilege for production)
@@ -122,11 +122,13 @@ After successful deployment, your static website will be accessible at the follo
 ```
 http://your-bucket-name.s3-website-<region>.amazonaws.com
 ```
-
+### IAM User
 ![IAM user](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/user.png)
 
+### Bucket Content
 ![bucket](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/bucket_content.png)
 
+### Static Website
 ![output](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/output.png)
 
 ---
@@ -161,8 +163,10 @@ To improve performance and global availability of your static website, you can u
         - `/*` : This invalidates **all files** in the distribution.
    - Click Create Invalidation
 
+### Create Distribution
 ![origin](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/origin.png)
 
+### Create Invalidation to clear cloudfront cache
 ![invalidation](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/invalidation.png)
 
 
@@ -173,6 +177,5 @@ Once the distribution is deployed (it may take a few minutes), your static site 
 https://d3nwwpqx7m3zbn.cloudfront.net/
 ```
 
+### Website accessed through cloudfront URL
 ![cloudfront](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/cloudfront.png)
-
----
