@@ -1,6 +1,8 @@
-name: Deploy to S3
+# Workflow Name
+name: Deploy to S3  
 
-on:
+# Trigger: When to Run
+on:             
   push:
     branches:
       - main  # or 'master'
