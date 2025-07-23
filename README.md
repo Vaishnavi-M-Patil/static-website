@@ -15,11 +15,13 @@ To automate the process of building, testing, and deploying a static website (bu
 ```bash
 static-website/
 ├── index.html
-├── style.css
-├── script.js
+├── css/
+├── js/
+├── img/
+├── webfonts/
 ├── .github/
 │ └── workflows/
-│ └── main.yml
+│ | └── main.yml
 └── README.md
 ```
 
