@@ -12,7 +12,7 @@ static-website/
 ├── script.js
 ├── .github/
 │ └── workflows/
-│ └── deploy.yml
+│ └── main.yml
 └── README.md
 ```
 
@@ -33,16 +33,17 @@ static-website/
 3. **Bucket Policy (for public access)**
 ```json
    {
-     "Version": "2012-10-17",
-     "Statement": [
-       {
-         "Effect": "Allow",
-         "Principal": "*",
-         "Action": "s3:GetObject",
-         "Resource": "arn:aws:s3:::your-bucket-name/*"
-       }
-     ]
-   }
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::cicd-static-wesite/*"
+        }
+    ]
+}
 ```
 
 ---
@@ -55,12 +56,12 @@ Go to **Repository Settings > Secrets and Variables > Actions** in your GitHub r
 | `AWS_ACCESS_KEY_ID`     | IAM user access key from your AWS account         |
 | `AWS_SECRET_ACCESS_KEY` | IAM user secret key from your AWS account         |
 | `AWS_REGION`            | AWS region where your S3 bucket is hosted (e.g., `us-east-1`) |
-| `S3_BUCKET_NAME`        | The name of your S3 bucket (e.g., `my-static-site`) |
+| `AWS_BUCKET_NAME`        | The name of your S3 bucket (e.g., `cicd-static-wesite`) |
 
 ---
 ## ⚙️ CI/CD Workflow Configuration
 
-Create a workflow file at `.github/workflows/deploy.yml` with the following content:
+Create a workflow file at `.github/workflows/main.yml` with the following content:
 
 ```yaml
 # Workflow Name
@@ -91,9 +92,26 @@ jobs:
       run: |
         aws s3 sync . s3://${{ secrets.AWS_BUCKET_NAME }} --delete --exclude ".git/" --exclude ".github/"
 ```
+### 🔍 Workflow Explanation
 
+| Step                          | Purpose                                                                 |
+|-------------------------------|-------------------------------------------------------------------------|
+| `on: push`                    | Triggers the workflow on every push to the `main` branch               |
+| `actions/checkout@v3`         | Clones your repository into the GitHub Actions runner                  |
+| `configure-aws-credentials@v3`| Configures AWS CLI using credentials stored in GitHub Secrets          |
+| `aws s3 sync`                 | Syncs files from the repository to the specified S3 bucket             |
+| `--delete`                    | Deletes files in the S3 bucket that no longer exist in the repository  |
+| `--exclude`                   | Excludes internal folders like `.git/` and `.github/` from the upload  |
 
-📈 What This Workflow Does
+### 📈 What This Workflow Does
 - Automatically deploys your static website to AWS S3
 - Triggered every time you push to the main branch
 - No need to deploy manually — this is a basic CI/CD pipeline
+
+---
+
+## 🌐 Accessing the Deployed Website
+After successful deployment, your static website will be accessible at the following URL format:
+```
+http://your-bucket-name.s3-website-<region>.amazonaws.com
+```
