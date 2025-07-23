@@ -1,7 +1,7 @@
 # 🚀 CI/CD Pipeline for a Static Website hosted on AWS S3 using GitHub Actions 
 
 ## 📌 Objective:
-To automate the process of building, testing, and deploying a static website (built using HTML, CSS, and JavaScript) to a web hosting platform like AWS S3 or Netlify, using modern CI/CD tools like GitHub Actions, Jenkins, or GitLab CI.
+To automate the process of building, testing, and deploying a static website (built using HTML, CSS, and JavaScript) to a web hosting platform like AWS S3, using modern CI/CD tools like GitHub Actions.
 
 ---
 ## 🔧 Tech Stack:
