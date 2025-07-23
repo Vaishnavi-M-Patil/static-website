@@ -115,3 +115,5 @@ After successful deployment, your static website will be accessible at the follo
 ```
 http://your-bucket-name.s3-website-<region>.amazonaws.com
 ```
+
+![output](https://github.com/Vaishnavi-M-Patil/static-website/blob/main/output/output.png)
